@@ -1,0 +1,83 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+body {
+  color: rgb(var(--foreground-rgb));
+  background: url(/assets/image/bodyBg.png);
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  font-family: "Poppins", sans-serif;
+  min-height: 100vh;
+  /* background-position: center; */
+}
+
+.wrapper {
+  color: white;
+  min-height: 100vh;
+  background: linear-gradient(
+    90deg,
+    rgba(3, 23, 46, 0.87) 0%,
+    rgba(29, 62, 101, 0.52) 48.44%,
+    rgba(76, 197, 192, 0.42) 93.23%
+  );
+  padding: 24px;
+  background-size: 100%;
+  background-position: center;
+  width: 100%;
+}
+/* table tbody tr td:nth-child(1) > p {
+  padding-bottom: 20px;
+  padding-top: 11px;
+} */
+table tbody tr td {
+  padding-top: 15px;
+}
+
+table tbody {
+height: 100px !important;
+}
+
+::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+::-webkit-scrollbar-track {
+  background-color: #5a5236;
+  border-radius: 0px;
+}
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(0deg, #c660c7 0%, #4cc5c0 100%);
+  border-radius: 7px;
+  width: 21px;
+  overflow: auto;
+}
+
+.move-text {
+  text-align: right;
+  display: block;
+}
+
+
+
+/* heigh charts */
+.highcharts-background{
+  background: none;
+  fill : none;
+}
+.highcharts-root {
+  border-radius: 16px;
+  overflow: hidden;
+  color: #fff;
+}
+.highcharts-legend{
+  display: none;
+
+}
+
+.highcharts-credits{
+display: none;
+}

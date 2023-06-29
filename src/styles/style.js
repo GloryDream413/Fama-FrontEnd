@@ -1,0 +1,1 @@
+export const pageGradients = 'linear-gradient(270deg, #C660C7 0%, #4CC5C0 100%)';
