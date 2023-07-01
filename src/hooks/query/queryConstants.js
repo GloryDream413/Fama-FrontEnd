@@ -7,4 +7,4 @@ export const authorizedUsers = [
 ]
 
 //export const endPointOfApi = 'https://famaone.xyz/api/'
-export const endPointOfApi = 'http://localhost:5000/api'
+export const endPointOfApi = 'http://107.20.59.165:5000'
