@@ -20,7 +20,7 @@ export const useQueryGetUserInfo = () => {
     let config = {
       method: 'get',
       maxBodyLength: Infinity,
-      url: 'http://107.20.59.165:5000/get-data',
+      url: 'http://localhost:5000/get-data',
       headers: {},
       timeout: 120000,
     };
@@ -43,4 +43,3 @@ export const useQueryGetUserInfo = () => {
     },
   });
 };
-
