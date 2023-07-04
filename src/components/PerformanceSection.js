@@ -57,6 +57,7 @@ export default function MainGraph() {
   }
 
   const currentDateData = getUserData?.[toDayDate];
+  console.log("CurrentDateData=", getUserData);
   const performanceDetails = currentDateData?.performance;
 
   // format Data for Graph
