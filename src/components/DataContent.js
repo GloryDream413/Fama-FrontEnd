@@ -32,10 +32,7 @@ export default function DataContent({drawdown}) {
   })
 
   const totalUSDCUSD = (Number(dataTotalVaultUSDC) /1000000) * (Number(usdcPrice) /100000000);
-  console.log("USDC=", totalUSDCUSD);
   const totalETHUSD = (Number(dataTotalVaultETH) / (10 ** 18)) * (Number(ethPrice) /100000000);
-  console.log("ETH=", totalETHUSD);
-  
   const totalUSD = totalUSDCUSD + totalETHUSD;
   const percentageUsd = totalUSD / 50000 * 100
   return (

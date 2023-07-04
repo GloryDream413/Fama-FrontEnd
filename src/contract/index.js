@@ -5,9 +5,9 @@ export const lpTokenContractAddress = "0xe2448621a1FD70dCCdf7811D92a8F6fa46d46B5
 
 import contractAbi2 from './contractAbi.json';
 import tokenContract from './ABI_ERC20.json';
-import lpTokenContract from './lpTokenContractAbi.json';
+import lpTokenContractAbi from './lpTokenContractAbi.json';
 
 
 export const wagmiContractConfig = { address: contractAddress, abi: contractAbi2 }
 export const erc20Contract = { address: erc20ContractAddress, abi: tokenContract }
-export const lpTokenContract = { address: lpTokenContractAddress, abi: lpTokenContract }
+export const lpTokenContract = { address: lpTokenContractAddress, abi: lpTokenContractAbi }

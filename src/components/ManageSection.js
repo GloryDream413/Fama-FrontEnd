@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 /* eslint-disable jsx-a11y/alt-text */
 
-import { contractAddress, erc20Contract, erc20ContractAddress, wagmiContractConfig } from "@/contract";
+import { contractAddress, erc20Contract, erc20ContractAddress, wagmiContractConfig, lpTokenContractAddress, lpTokenContract } from "@/contract";
 import { notify } from "@/utils/helper";
 import axios from "axios";
 import { useEffect, useState } from "react";
@@ -9,25 +9,6 @@ import { useAccount, useBalance, useContractRead, useContractWrite } from "wagmi
 import LoadingSpinner from "./LoadingSpinner";
 
 
-
-const Position_Data = [
-  {
-    id: 1,
-    title: "0",
-  },
-  {
-    id: 2,
-    title: "LP Tokens",
-  },
-  {
-    id: 3,
-    title: "$0",
-  },
-  {
-    id: 4,
-    title: "Est. Value",
-  },
-];
 
 export default function ManageSection() {
 
@@ -72,6 +53,74 @@ export default function ManageSection() {
     {
       id: 4,
       title: "USD",
+    },
+  ];
+
+  //lpTokenContract
+  const { data: lpTokenBalance, error: errLpTokenBalance, isLoading: isLpTokenLoading } =
+  useContractRead({
+    ...lpTokenContract,
+    functionName: 'balanceOf',
+    chainId: 5,
+    args: [address],
+  })
+
+  const { data: totalSupply, error: errTotalSupply, isLoading: isTotalSupplyLoading } =
+  useContractRead({
+    ...lpTokenContract,
+    functionName: 'totalSupply',
+    chainId: 5,
+  })
+
+  const { data: dataTotalVaultUSDC, error: idTotalVaultETH, isLoading: isTotalVaultETHLoading } =
+  useContractRead({
+    ...wagmiContractConfig,
+    functionName: 'totalVaultUSDC',
+    chainId: 5,
+  })
+
+  const { data: usdcPrice, error: errUSDCPrice, isLoading: isUSDCPriceLoading } =
+  useContractRead({
+    ...wagmiContractConfig,
+    functionName: 'getUSDCUSDPrice',
+    chainId: 5,
+  })
+
+  const { data: dataTotalVaultETH, error: idTotalVaultUSDC, isLoading: isTotalVaultUSDCLoading } =
+  useContractRead({
+    ...wagmiContractConfig,
+    functionName: 'totalVaultEth',
+    chainId: 5,
+  })
+
+  const { data: ethPrice, error: errETHPrice, isLoading: isETHPriceLoading } =
+  useContractRead({
+    ...wagmiContractConfig,
+    functionName: 'getEthUSDPrice',
+    chainId: 5,
+  })
+
+  const totalUSDCUSD = (Number(dataTotalVaultUSDC) /1000000) * (Number(usdcPrice) /100000000);
+  const totalETHUSD = (Number(dataTotalVaultETH) / (10 ** 18)) * (Number(ethPrice) /100000000);
+  const totalUSD = totalUSDCUSD + totalETHUSD;
+  const lpTokenPrice = totalUSD / (Number(totalSupply) / (10 ** 18));
+  
+  const Position_Data = [
+    {
+      id: 1,
+      title: `${(Number(lpTokenBalance)/(10 ** 18)).toFixed(2)}`,
+    },
+    {
+      id: 2,
+      title: "LP Tokens",
+    },
+    {
+      id: 3,
+      title: "$" + `${(Number(lpTokenBalance)/(10 ** 18)*lpTokenPrice).toFixed(2)}`,
+    },
+    {
+      id: 4,
+      title: "Est. Value",
     },
   ];
 
