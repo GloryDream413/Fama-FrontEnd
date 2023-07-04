@@ -94,11 +94,11 @@ export default function MainGraph() {
         <div className="grid grid-cols-1 gap-[20px] w-[90%] lg:grid-cols-2">
           <div className="flex gap-5 justify-between items-center lg:justify-normal">
             <p className="text-14 sm:text-20">All time performance:</p>
-            <p className="text-16 sm:text-25 text-number">{`+${performanceDetails?.all_time_performance || 122}%`}</p>
+            <p className="text-16 sm:text-25 text-number">{`+${performanceDetails?.all_time_performance}%`}</p>
           </div>
           <div className="flex gap-5 justify-between items-center lg:justify-normal">
             <p className="text-14 sm:text-20">Month to date performance:</p>
-            <p className="text-16 sm:text-25 text-number">+{performanceDetails?.month_to_date_performance || 17.2}%</p>
+            <p className="text-16 sm:text-25 text-number">+{performanceDetails?.month_to_date_performance}%</p>
           </div>
         </div>
         <Graph graphData={graphData} />
