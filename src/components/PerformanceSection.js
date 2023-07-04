@@ -51,12 +51,15 @@ export default function MainGraph() {
     handleFetch()
   }, [])
 
+  let toDayDate = '';
+  for (const key in getUserData) {
+    toDayDate = key;
+  }
 
-
-  const date = Date();
-  const toDayDate = dayjs(date).format('DD-MM-YYYY')
   const currentDateData = getUserData?.[toDayDate];
   const performanceDetails = currentDateData?.performance;
+
+  console.log("currentDateData", getUserData);
 
   // format Data for Graph
   const dateArray = getUserData && Object.keys(getUserData);
