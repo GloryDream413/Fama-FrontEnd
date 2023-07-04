@@ -15,6 +15,7 @@ export default function ManageSection() {
   const { address } = useAccount();
   const [inputValue, setInputValue] = useState(0);
   const [usdBalance, setUsdBalance] = useState(null);
+  const [withdrawType, setSelectedWithdrawType] = useState('USDC');
   const { data: userBalance, isLoading: loadUserBalance } = useBalance({
     address,
   })
@@ -168,7 +169,6 @@ export default function ManageSection() {
     if (isErrorWithdraw) {
       notify(isErrorWithdraw?.message)
     }
-
   }, [error, isErrorWithdraw])
 
   const isApprovedUser = approveUser === 0n ? true : false;
@@ -212,15 +212,20 @@ export default function ManageSection() {
               setInputValue(value)
             }} type='number' className="bg-none w-full text-18 sm:text-25 focus:outline-none" />
           </div>
-          <div className="flex items-center  gap-[3px] border-[1px] rounded-[30px] w-full justify-center py-[3px] pl-[15px] pr-[12px]">
-            <p className="text-18 sm:text-22">USDC</p>
-            <img src="/assets/image/DownArrow.png" className="w-[21px] h-[14px]" />
-          </div>
+          <select
+            id="coinSelect"
+            className="bg-[#1C1C28] border border-[#454258] cursor-pointer text-gray-200 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            style={{ background: "linear-gradient(270deg, #C660C7 0%, #4CC5C0 100%)" }}
+            onChange={(e) => setSelectedWithdrawType(e.target.value)}
+          >
+            <option className="bg-[#1C1C28]" value="USDC">USDC</option>
+            <option className="bg-[#1C1C28]" value="LP">LP</option>
+          </select>
         </div>
       </div>
       <div className="mt-[59px] lg:mt-[100px] ">
         <button
-          disabled={!mutateDeposit || inputValue === 0}
+          disabled={!mutateDeposit || inputValue === 0 || withdrawType === "LP"}
           // mutateDeposit?.()
           // onClick={() => mutateDeposit()}
           onClick={() => {
@@ -238,7 +243,7 @@ export default function ManageSection() {
           className="w-full text-16 sm:text-18 rounded-[30px] py-[10px]" style={{ background: "linear-gradient(270deg, #C660C7 0%, #4CC5C0 100%)" }}>
           {isLoading ? <LoadingSpinner /> : 'Deposit'}
         </button>
-        <button disabled={!mutateWithdraw || inputValue === 0}
+        <button disabled={!mutateWithdraw || inputValue === 0 || withdrawType === "USDC"}
           onClick={() => {
             if (address) { mutateWithdraw?.() } else {
               notify('Wallet is not connected')
