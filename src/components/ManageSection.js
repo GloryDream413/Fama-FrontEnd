@@ -71,7 +71,7 @@ export default function ManageSection() {
     },
     {
       id: 4,
-      title: "USDC",
+      title: "USD",
     },
   ];
 
