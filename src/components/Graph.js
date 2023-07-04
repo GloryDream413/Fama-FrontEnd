@@ -1,30 +1,10 @@
 import Highcharts from 'highcharts';
 import { useEffect } from 'react';
-
-
 export default function Graph({ graphData = [] }) {
-
   useEffect(() => {
-
-    const dummyData = [{ date: '1/1/23', percentage: -4521 },
-    { date: '1/2/23', percentage: 1120 },
-    { date: '1/3/23', percentage: 2321 },
-
-    { date: '1/4/23', percentage: 1212 },
-    { date: '1/5/23', percentage: -4523 },
-
-    { date: '1/6/23', percentage: 1232 },
-    { date: '1/7/23', percentage: 2329 },
-    { date: '1/8/23', percentage: 3434 },
-    { date: '1/9/23', percentage: 80 },
-    { date: '1/10/23', percentage: 7990 },]
-
     const data = [
-      { percentage: 1.32, date: '06/20/2023' },
       ...graphData
-      // Add more data points as needed
     ];
-
     // Parse dates and convert percentages to decimals
     const parsedData = graphData?.[0]?.percentage && data.map((point) => ({
       x: new Date(point.date).getTime(), // Convert date to milliseconds

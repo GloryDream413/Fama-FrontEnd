@@ -59,12 +59,10 @@ export default function MainGraph() {
   const currentDateData = getUserData?.[toDayDate];
   const performanceDetails = currentDateData?.performance;
 
-  console.log("currentDateData", getUserData);
-
   // format Data for Graph
   const dateArray = getUserData && Object.keys(getUserData);
   const profitArray = getUserData && Object.values(getUserData);
-
+  
   useEffect(() => {
     if (!dateArray?.includes(toDayDate)) {
       handleFetchGraphData()
@@ -72,9 +70,7 @@ export default function MainGraph() {
   }, [dateArray, toDayDate])
 
   const handleFormateDate = (date) => {
-
     const newDate = date.split('-');
-
     const toDayDate = `${newDate[1]}/${newDate[0]}/${newDate[2]}`
     return toDayDate
   }
