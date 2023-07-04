@@ -10,8 +10,6 @@ import { endPointOfApi } from './../hooks/query/queryConstants';
 export default function MainGraph() {
 
   const [getUserData, setGetUserData] = useState();
-  // console.log({ getUserData })
-
   const handleFetch = async () => {
     let config = {
       method: 'get',
@@ -23,7 +21,6 @@ export default function MainGraph() {
 
     axios.request(config)
       .then((response) => {
-        // console.log({response})
         setGetUserData(response.data)
       })
       .catch((error) => {
@@ -57,7 +54,6 @@ export default function MainGraph() {
   }
 
   const currentDateData = getUserData?.[toDayDate];
-  console.log("CurrentDateData=", getUserData);
   const performanceDetails = currentDateData?.performance;
 
   // format Data for Graph
