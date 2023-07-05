@@ -44,8 +44,6 @@ export default function Graph({ graphData = [] }) {
             color: '#dbdadf', // Set x-axis labels color to white
           },
         },
-        min: -50,
-        max: 50, // Assuming percentages range from -50% to 50%
         tickInterval: 25, // Assuming percentages are between 0 and 100
       },
       series: [

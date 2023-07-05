@@ -38,10 +38,19 @@ export default function ManageSection() {
     handleFormateValue()
   }, [userBalance?.value])
 
+  const { data: usdcTokenBalance, error: errUSDCBalance, isLoading: isUSDCLoading } =
+  useContractRead({
+    ...erc20Contract,
+    functionName: 'balanceOf',
+    chainId: 5,
+    args: [address],
+  })
+
+  console.log("USDC Balance=", usdcTokenBalance);
   const Wallet_Data = [
     {
       id: 1,
-      title: " Ξ " + usdBalance?.balance?.toFixed(4),
+      title: " Ξ " + usdBalance?.balance?.toFixed(2),
     },
     {
       id: 2,
@@ -49,11 +58,11 @@ export default function ManageSection() {
     },
     {
       id: 3,
-      title: `$${usdBalance?.balanceInUSD.toFixed(3)}`,
+      title: " Ξ "  + `${(Number(usdcTokenBalance)/(10 ** 6)).toFixed(2)}`,
     },
     {
       id: 4,
-      title: "USD",
+      title: "USDC",
     },
   ];
 
@@ -205,7 +214,7 @@ export default function ManageSection() {
         <p className="text-16 sm:text-18">Execute:</p>
         <div className="flex items-center justify-between gap-2 w-full mt-[39px]">
           <div className="border-b-[1px] flex items-center gap-[3px] w-full w-[40%]">
-            <p className="text-20 sm:text-25">$</p>
+            {/* <p className="text-20 sm:text-25">$</p> */}
             <input placeholder="0" min='0' onChange={(e) => {
               let value = e.target.value;
               value = Number(value)
