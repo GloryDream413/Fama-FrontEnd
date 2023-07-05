@@ -1,12 +1,18 @@
 import Highcharts from 'highcharts';
 import { useEffect } from 'react';
 export default function Graph({ graphData = [] }) {
+  let graphRealData = graphData;
   useEffect(() => {
+    if(graphData.length >= 7)
+    {
+      graphRealData = graphData.slice(graphData.length - 7, graphData.length);
+    }
+    
     const data = [
-      ...graphData
+      ...graphRealData
     ];
     // Parse dates and convert percentages to decimals
-    const parsedData = graphData?.[0]?.percentage && data.map((point) => ({
+    const parsedData = graphRealData?.[0]?.percentage && data.map((point) => ({
       x: new Date(point.date).getTime(), // Convert date to milliseconds
       y: point.percentage, // Convert percentage to decimal
     }))
@@ -58,7 +64,7 @@ export default function Graph({ graphData = [] }) {
 
     // Render the chart
     Highcharts.chart('chartContainer', options);
-  }, [graphData?.[0]?.percentage]);
+  }, [graphRealData?.[graphRealData.length-1]?.percentage]);
 
   return (
     <div className='mt-[37px]  w-full pt-10 px-4 text-white border border-gray rounded-[16px] bg-[#102039]'>
