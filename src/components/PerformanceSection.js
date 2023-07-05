@@ -79,8 +79,7 @@ export default function MainGraph() {
       date: handleFormateDate(dateArray?.[idx])
     }
   })
-
-
+  
   return (
     <div className="">
       <div className="col-span-3 mt-[41px]">
@@ -96,7 +95,7 @@ export default function MainGraph() {
         </div>
         <Graph graphData={graphData} />
         <DataContent drawdown={currentDateData?.drawdowns} />
-        <DataTable tableData={graphData} />
+        <DataTable tableData={profitArray} />
       </div>
     </div>
   );

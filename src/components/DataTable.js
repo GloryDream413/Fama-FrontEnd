@@ -2,9 +2,8 @@ import { useState } from "react";
 import LoadingSpinner from './LoadingSpinner';
 
 export default function DataTable({ tableData }) {
-
   const [numOfRows, setNumOfRows] = useState(10);
-
+  console.log("TableData=", Object.values(tableData).reverse(), Array(tableData).reverse(), tableData);
   return (
     <div>
       <div className="flex items-center gap-[40px] mt-[54px]">
@@ -26,38 +25,40 @@ export default function DataTable({ tableData }) {
               </tr>
             </thead>
             <tbody className="">
-              {tableData ? (tableData?.map((item, idx) => {
-                let usdcValue = Number(item?.table?.['Asset Returned - USDC']);
-                usdcValue = usdcValue.toFixed(2);
-                let ethValue = Number(item?.table?.['Asset Returned - ETH']);
-                ethValue = ethValue !== 0 ? ethValue.toFixed(5) : 0;
-                const price = item?.table?.['Price - Uniswap']
-                const action = item?.table?.Signal || 'Hold';
-                let time = item?.table?.Timestamp?.split('@');
-                const date = time?.[0]
-                time = time?.[1]
+              {tableData ? (Object.values(tableData).reverse().map((item, idx) => {
+                return ( Object.values(item?.data).reverse().map((itemRow, idxRow) => {
+                  let usdcValue = Number(itemRow['Asset Returned - USDC']);
+                  usdcValue = usdcValue.toFixed(2);
+                  let ethValue = Number(itemRow['Asset Returned - ETH']);
+                  ethValue = ethValue !== 0 ? ethValue.toFixed(5) : 0;
+                  const price = itemRow['Price - Uniswap']
+                  const action = itemRow['Signal'] || 'Hold';
+                  let time = itemRow['Timestamp'].split('@');
+                  const date = time?.[0]
+                  time = time?.[1]
 
-                if (idx < numOfRows)
-                  return (
-                    <tr key={idx}>
-                      <td className="text-16">{date}</td>
-                      <td className="text-16 text-center">{time}</td>
-                      <td className="text-16 text-center">{action}</td>
-                      <td className="text-16 text-center">{price}</td>
-                      <td className="text-16 text-center">{ethValue}</td>
-                      <td className="text-16 text-center">{usdcValue || 0}</td>
-                      <td className="text-16">{price}</td>
-                    </tr>
-                  );
+                  if (idx < numOfRows)
+                    return (
+                      <tr key={idx}>
+                        <td className="text-16">{date}</td>
+                        <td className="text-16 text-center">{time}</td>
+                        <td className="text-16 text-center">{action}</td>
+                        <td className="text-16 text-center">{price}</td>
+                        <td className="text-16 text-center">{ethValue}</td>
+                        <td className="text-16 text-center">{usdcValue || 0}</td>
+                        <td className="text-16">{price}</td>
+                      </tr>
+                    );
+                })
+                )
               })) : (<tr><td rowspan="10" colspan="7" ><LoadingSpinner />  </td></tr>)}
             </tbody>
           </table>
-
         </div>
       </div>
-      <button onClick={() => numOfRows <= tableData?.length && setNumOfRows(numOfRows + 20)} className="bg-none w-fit mx-auto text-14 mt-[18px] flex justify-center items-center">
+      {/* <button onClick={() => numOfRows <= tableData?.length && setNumOfRows(numOfRows + 20)} className="bg-none w-fit mx-auto text-14 mt-[18px] flex justify-center items-center">
         See all
-      </button>
+      </button> */}
     </div>
   );
 }
