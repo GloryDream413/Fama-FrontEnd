@@ -46,6 +46,7 @@ export default function ManageSection() {
     args: [address],
   })
 
+  console.log("USDC Balance=", usdcTokenBalance);
   const Wallet_Data = [
     {
       id: 1,
