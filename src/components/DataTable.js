@@ -58,9 +58,9 @@ export default function DataTable({ tableData }) {
 
         </div>
       </div>
-      <button onClick={() => numOfRows <= tableData?.length && setNumOfRows(numOfRows + 20)} className="bg-none w-fit mx-auto text-14 mt-[18px] flex justify-center items-center">
+      {/* <button onClick={() => numOfRows <= tableData?.length && setNumOfRows(numOfRows + 20)} className="bg-none w-fit mx-auto text-14 mt-[18px] flex justify-center items-center">
         See all
-      </button>
+      </button> */}
     </div>
   );
 }
