@@ -96,7 +96,7 @@ export default function MainGraph() {
         </div>
         <Graph graphData={graphData} />
         <DataContent drawdown={currentDateData?.drawdowns} />
-        <DataTable tableData={graphData} />
+        <DataTable tableData={profitArray} />
       </div>
     </div>
   );
