@@ -26,23 +26,6 @@ export default function MainGraph() {
       .catch((error) => {
       });
   }
-  const handleFetchGraphData = async () => {
-    let config = {
-      method: 'get',
-      maxBodyLength: Infinity,
-      url: `${endPointOfApi}/save-data`,
-      headers: {},
-      timeout: 120000,
-    };
-
-    axios.request(config)
-      .then((response) => {
-        // setGraphData(response.data)
-      })
-      .catch((error) => {
-      });
-  }
-
 
   useEffect(() => {
     handleFetch()
@@ -59,13 +42,7 @@ export default function MainGraph() {
   // format Data for Graph
   const dateArray = getUserData && Object.keys(getUserData);
   const profitArray = getUserData && Object.values(getUserData);
-  
-  useEffect(() => {
-    if (!dateArray?.includes(toDayDate)) {
-      handleFetchGraphData()
-    }
-  }, [dateArray, toDayDate])
-
+  console.log("profitArray=", profitArray);
   const handleFormateDate = (date) => {
     const newDate = date.split('-');
     const toDayDate = `${newDate[1]}/${newDate[0]}/${newDate[2]}`
