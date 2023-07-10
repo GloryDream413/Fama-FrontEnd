@@ -44,15 +44,16 @@ export default function MainGraph() {
     }
   });
 
-  // getUserData?.map((item, idx) => {
-  //   const data = Date(item?.Timestamp);
-  //   console.log("data1=", item?.Timestamp, data);
-  //   const date = new Date(data);
-  //   const isoString = date.toISOString();
-  //   getUserData[idx].Timestamp = isoString;
-  // })
-
-  console.log("userData=", updatedUserData);
+  const groupedData = {};
+  updatedUserData?.map((item) => {
+    const date = item.Timestamp.split("@")[0];
+    if (!groupedData[date]) {
+      groupedData[date] = [];
+    }
+    groupedData[date].push(item);
+  });
+  
+  console.log("userData=", groupedData);
 
   let toDayDate = '';
   for (const key in getUserData) {
