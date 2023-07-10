@@ -64,24 +64,13 @@ export default function MainGraph() {
   // format Data for Graph
   const dateArray = getUserData && Object.keys(groupedData);
   const profitArray = getUserData && Object.values(groupedData);
-
-  console.log(">>>>>>>>>>", allTimePerformance);
-  console.log(">>>>>>>>>>", profitArray);
-
-  const handleFormateDate = (date) => {
-    const newDate = date.split('/');
-    const toDayDate = `${newDate[1]}/${newDate[0]}/${newDate[2]}`
-    return toDayDate
-  }
-
   const graphData = profitArray?.map((item, idx) => {
     return {
-      percentage: item?.profit,
+      percentage: item?.[0].profit,
       table: item?.[0],
-      date: handleFormateDate(dateArray?.[idx])
+      date: dateArray?.[idx]
     }
   })
-
 
   return (
     <div className="">
@@ -97,7 +86,7 @@ export default function MainGraph() {
           </div>
         </div>
         <Graph graphData={graphData} />
-        {/* <DataContent drawdown={currentDateData?.drawdowns} /> */}
+        <DataContent drawdown={currentDateData?.drawdowns} />
         <DataTable tableData={profitArray} />
       </div>
     </div>

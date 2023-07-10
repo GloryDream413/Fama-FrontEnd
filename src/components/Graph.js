@@ -11,8 +11,8 @@ export default function Graph({ graphData = [] }) {
     const data = [
       ...graphRealData
     ];
-    // Parse dates and convert percentages to decimals
-    const parsedData = graphRealData?.[0]?.percentage && data.map((point) => ({
+    // Parse dates and onvert percentages to decimals
+    const parsedData = graphRealData?.[0]?.percentage !== undefined && data.map((point) => ({
       x: new Date(point.date).getTime(), // Convert date to milliseconds
       y: point.percentage, // Convert percentage to decimal
     }))
