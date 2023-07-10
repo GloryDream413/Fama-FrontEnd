@@ -31,6 +31,29 @@ export default function MainGraph() {
     handleFetch()
   }, [])
 
+
+  const updatedUserData = getUserData?.map((item) => {
+    if (item && item.Timestamp) {
+      const date = new Date(item.Timestamp * 1000);
+      const RealDate = date.toLocaleDateString();
+      const RealTime = date.toLocaleTimeString();
+      const timestamp = `${RealDate}@${RealTime}`;
+      return { ...item, Timestamp: timestamp };
+    } else {
+      return item;
+    }
+  });
+
+  // getUserData?.map((item, idx) => {
+  //   const data = Date(item?.Timestamp);
+  //   console.log("data1=", item?.Timestamp, data);
+  //   const date = new Date(data);
+  //   const isoString = date.toISOString();
+  //   getUserData[idx].Timestamp = isoString;
+  // })
+
+  console.log("userData=", updatedUserData);
+
   let toDayDate = '';
   for (const key in getUserData) {
     toDayDate = key;
@@ -42,12 +65,13 @@ export default function MainGraph() {
   // format Data for Graph
   const dateArray = getUserData && Object.keys(getUserData);
   const profitArray = getUserData && Object.values(getUserData);
-  console.log("profitArray=", profitArray);
   const handleFormateDate = (date) => {
     const newDate = date.split('-');
     const toDayDate = `${newDate[1]}/${newDate[0]}/${newDate[2]}`
     return toDayDate
   }
+
+  
 
   const graphData = profitArray?.map((item, idx) => {
     return {
