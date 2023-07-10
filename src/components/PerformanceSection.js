@@ -6,6 +6,7 @@ import Graph from "./Graph";
 import { dataBase } from "@/_mock/dbData";
 import axios from "axios";
 import { endPointOfApi } from './../hooks/query/queryConstants';
+import { current } from "@reduxjs/toolkit";
 
 export default function MainGraph() {
 
@@ -60,7 +61,17 @@ export default function MainGraph() {
 
   const currentDateData = groupedData?.[toDayDate];
   const allTimePerformance = currentDateData?.[currentDateData.length - 1].profit;
-  
+
+  let month2datePerformance = 0;
+  if(currentDateData?.length >= 7)
+  {
+    month2datePerformance = currentDateData?.[currentDateData.length - 1].profit - currentDateData?.[currentDateData.length - 7].profit;
+  }
+  else
+  {
+    month2datePerformance = currentDateData?.[currentDateData.length - 1].profit - currentDateData?.[0].profit;
+  }
+
   // format Data for Graph
   const dateArray = getUserData && Object.keys(groupedData);
   const profitArray = getUserData && Object.values(groupedData);
@@ -82,7 +93,7 @@ export default function MainGraph() {
           </div>
           <div className="flex gap-5 justify-between items-center lg:justify-normal">
             <p className="text-14 sm:text-20">Month to date performance:</p>
-            <p className="text-16 sm:text-25 text-number">{allTimePerformance}%</p>
+            <p className="text-16 sm:text-25 text-number">{month2datePerformance}%</p>
           </div>
         </div>
         <Graph graphData={graphData} />
