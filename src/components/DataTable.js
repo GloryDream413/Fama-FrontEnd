@@ -27,12 +27,12 @@ export default function DataTable({ tableData }) {
             </thead>
             <tbody className="">
               {tableData ? (Object.values(tableData).reverse().map((item, idx) => {
-                return ( Object.values(item?.data).reverse().map((itemRow, idxRow) => {
-                  let usdcValue = Number(itemRow['Asset Returned - USDC']);
+                return ( Object.values(item).reverse().map((itemRow, idxRow) => {
+                  let usdcValue = Number(itemRow['USDCbalance']);
                   usdcValue = usdcValue.toFixed(2);
-                  let ethValue = Number(itemRow['Asset Returned - ETH']);
+                  let ethValue = Number(itemRow['ETHbalance']);
                   ethValue = ethValue !== 0 ? ethValue.toFixed(5) : 0;
-                  const price = itemRow['Price - Uniswap']
+                  const price = itemRow['Price']
                   const action = itemRow['Signal'] || 'Hold';
                   let time = itemRow['Timestamp'].split('@');
                   const date = time?.[0]

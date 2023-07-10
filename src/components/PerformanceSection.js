@@ -53,31 +53,37 @@ export default function MainGraph() {
     groupedData[date].push(item);
   });
   
-  console.log("userData=", groupedData);
-
   let toDayDate = '';
-  for (const key in getUserData) {
+  for (const key in groupedData) {
     toDayDate = key;
   }
 
-  const currentDateData = getUserData?.[toDayDate];
-  const performanceDetails = currentDateData?.performance;
+  const currentDateData = groupedData?.[toDayDate];
+  const currentVirtualETHBalance = currentDateData?.[currentDateData.length - 1].VirtualETHBalance;
+  const currentVirtualUSDCBalance = currentDateData?.[currentDateData.length - 1].VirtualUSDCBalance;
+  const currentETHPrice = currentDateData?.[currentDateData.length - 1].Price;
+  const currentTotalVirtualETHBalance = currentVirtualETHBalance + currentVirtualUSDCBalance/currentETHPrice;
+
+  const allTimePerformance = (currentTotalVirtualETHBalance - 1) * 100;
+  
 
   // format Data for Graph
-  const dateArray = getUserData && Object.keys(getUserData);
-  const profitArray = getUserData && Object.values(getUserData);
+  const dateArray = getUserData && Object.keys(groupedData);
+  const profitArray = getUserData && Object.values(groupedData);
+
+  console.log(">>>>>>>>>>", dateArray);
+  console.log(">>>>>>>>>>", profitArray);
+
   const handleFormateDate = (date) => {
-    const newDate = date.split('-');
+    const newDate = date.split('/');
     const toDayDate = `${newDate[1]}/${newDate[0]}/${newDate[2]}`
     return toDayDate
   }
 
-  
-
   const graphData = profitArray?.map((item, idx) => {
     return {
       percentage: item?.profit,
-      table: item?.data[0],
+      table: item?.[0],
       date: handleFormateDate(dateArray?.[idx])
     }
   })
@@ -89,15 +95,15 @@ export default function MainGraph() {
         <div className="grid grid-cols-1 gap-[20px] w-[90%] lg:grid-cols-2">
           <div className="flex gap-5 justify-between items-center lg:justify-normal">
             <p className="text-14 sm:text-20">All time performance:</p>
-            <p className="text-16 sm:text-25 text-number">{`+${performanceDetails?.all_time_performance}%`}</p>
+            <p className="text-16 sm:text-25 text-number">{`+${allTimePerformance}%`}</p>
           </div>
           <div className="flex gap-5 justify-between items-center lg:justify-normal">
             <p className="text-14 sm:text-20">Month to date performance:</p>
-            <p className="text-16 sm:text-25 text-number">+{performanceDetails?.month_to_date_performance}%</p>
+            <p className="text-16 sm:text-25 text-number">+{allTimePerformance}%</p>
           </div>
         </div>
         <Graph graphData={graphData} />
-        <DataContent drawdown={currentDateData?.drawdowns} />
+        {/* <DataContent drawdown={currentDateData?.drawdowns} /> */}
         <DataTable tableData={profitArray} />
       </div>
     </div>
