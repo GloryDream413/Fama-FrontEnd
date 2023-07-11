@@ -145,7 +145,7 @@ export default function ManageSection() {
       ...wagmiContractConfig,
       functionName: 'deposit',
       chainId: 5,
-      args: [erc20ContractAddress, parseInt(inputValue)],
+      args: [parseInt(inputValue)],
     })
 
   // WidthDraw
@@ -167,13 +167,14 @@ export default function ManageSection() {
     });
 
   const realApproveAmount = approveAmount/1000000n;
+
   useEffect(() => {
-    if (error) {
-      //notify(error?.message)
-    }
-    if (isErrorWithdraw) {
-      notify(isErrorWithdraw?.message)
-    }
+    // if (error) {
+    //   notify(error?.message)
+    // }
+    // if (isErrorWithdraw) {
+    //   notify(isErrorWithdraw?.message)
+    // }
   }, [error, isErrorWithdraw])
 
   return (
