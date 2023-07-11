@@ -7,11 +7,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useAccount, useBalance, useContractRead, useContractWrite } from "wagmi";
 import LoadingSpinner from "./LoadingSpinner";
-
-
-
 export default function ManageSection() {
-
   const { address } = useAccount();
   const [inputValue, setInputValue] = useState(0);
   const [usdBalance, setUsdBalance] = useState(null);
@@ -162,7 +158,7 @@ export default function ManageSection() {
     })
 
 
-  const { data: approveUser, error: approveError, } =
+  const { data: approveAmount, error: approveError, } =
     useContractRead({
       ...erc20Contract,
       functionName: 'allowance',
@@ -170,17 +166,15 @@ export default function ManageSection() {
       args: [address, contractAddress],
     });
 
+  const realApproveAmount = approveAmount/1000000n;
   useEffect(() => {
     if (error) {
-      notify(error?.message)
+      //notify(error?.message)
     }
     if (isErrorWithdraw) {
       notify(isErrorWithdraw?.message)
     }
   }, [error, isErrorWithdraw])
-
-  const isApprovedUser = approveUser === 0n ? true : false;
-
 
   return (
     <div className="bg-manage-bg px-[25px] pt-[14px] pb-[41px] border-[1px] border-white mt-[41px] rounded-[30px]">
@@ -234,11 +228,9 @@ export default function ManageSection() {
       <div className="mt-[59px] lg:mt-[100px] ">
         <button
           disabled={!mutateDeposit || inputValue === 0 || withdrawType === "LP"}
-          // mutateDeposit?.()
-          // onClick={() => mutateDeposit()}
           onClick={() => {
             if (address) {
-              if (isApprovedUser) {
+              if (realApproveAmount < parseInt(inputValue)) {
                 mutateApprove()
               } else {
                 mutateDeposit()

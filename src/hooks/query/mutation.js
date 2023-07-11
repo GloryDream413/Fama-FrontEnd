@@ -9,8 +9,7 @@ export const useMutationDeposit = () => {
   // console.log({ APP_CONTRACT })
 
   const mutationFn = async () => {
-    const tx = await APP_CONTRACT.deposit('0x78dEca24CBa286C0f8d56370f5406B48cFCE2f86', 10);
-
+    const tx = await APP_CONTRACT.deposit('0xB72Bb8CD764006641de1687b3e3C89957106F460', 10);
     return tx.wait();
   };
 
