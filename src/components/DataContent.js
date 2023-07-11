@@ -44,7 +44,7 @@ export default function DataContent({drawdown}) {
         <p className='text-14 sm:text-16'>Vault Deposits:</p>
         <p className='text-14 sm:text-16'> ${`${totalUSD.toFixed(2)}`} ({percentageUsd.toFixed(2)}% capacity)</p>
         <p className='text-14 sm:text-16'>Avg. Drawdown Occurrence:</p>
-        <p className='text-14 sm:text-16'>{drawdown?.average_drawdown_occurance} per month</p>
+        <p className='text-14 sm:text-16'>{drawdown?.average_drawdown_occurance.toFixed(2)} per month</p>
     </div>
   )
 }

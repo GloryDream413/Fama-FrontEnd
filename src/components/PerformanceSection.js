@@ -62,26 +62,54 @@ export default function MainGraph() {
   const currentDateData = groupedData?.[toDayDate];
   const allTimePerformance = currentDateData?.[currentDateData.length - 1].profit;
 
-  let month2datePerformance = 0;
-  if(currentDateData?.length >= 7)
-  {
-    month2datePerformance = currentDateData?.[currentDateData.length - 1].profit - currentDateData?.[currentDateData.length - 7].profit;
-  }
-  else
-  {
-    month2datePerformance = currentDateData?.[currentDateData.length - 1].profit - currentDateData?.[0].profit;
-  }
-
   // format Data for Graph
   const dateArray = getUserData && Object.keys(groupedData);
   const profitArray = getUserData && Object.values(groupedData);
   const graphData = profitArray?.map((item, idx) => {
     return {
-      percentage: item?.[0].profit,
+      percentage: item?.[item.length - 1].profit,
       table: item?.[0],
       date: dateArray?.[idx]
     }
   })
+
+  let month2datePerformance = 0;
+  if(groupedData?.length >= 30)
+  {
+    month2datePerformance = currentDateData?.[currentDateData.length - 1].profit - groupedData?.[dateArray?.[dateArray?.length - 30]]?.[0]?.profit;
+  }
+  else
+  {
+    month2datePerformance = currentDateData?.[currentDateData.length - 1].profit - groupedData?.[dateArray?.[0]]?.[0]?.profit;
+  }
+
+
+  let average_drawdown_rate = 0;
+  let average_drawdown_occurance = 0;
+
+  for(let idx=1;idx<currentDateData?.length;idx++)
+  {
+    if(currentDateData?.[idx-1].profit > currentDateData?.[idx].profit)
+    {
+      average_drawdown_occurance++;
+      average_drawdown_rate += currentDateData?.[idx].profit - currentDateData?.[idx-1].profit;
+    }
+  }
+
+  average_drawdown_rate = average_drawdown_rate / average_drawdown_occurance;
+  average_drawdown_occurance = 0;
+  for(let idx=1;idx<getUserData?.length;idx++)
+  {
+    if(getUserData?.[idx-1].profit > getUserData?.[idx].profit)
+    {
+      average_drawdown_occurance++;
+    }
+  }
+  average_drawdown_occurance = average_drawdown_occurance / dateArray?.length;
+  const drawdowns = {
+    'average_drawdown_rate': average_drawdown_rate,
+    'average_drawdown_occurance': average_drawdown_occurance
+  }
 
   return (
     <div className="">
@@ -97,7 +125,7 @@ export default function MainGraph() {
           </div>
         </div>
         <Graph graphData={graphData} />
-        <DataContent drawdown={currentDateData?.drawdowns} />
+        <DataContent drawdown={drawdowns} />
         <DataTable tableData={profitArray} />
       </div>
     </div>
