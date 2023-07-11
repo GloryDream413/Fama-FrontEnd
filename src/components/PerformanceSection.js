@@ -108,7 +108,7 @@ export default function MainGraph() {
   average_drawdown_occurance = average_drawdown_occurance / dateArray?.length;
   const drawdowns = {
     'average_drawdown_rate': average_drawdown_rate.toFixed(7),
-    'average_drawdown_occurance': average_drawdown_occurance.toFixed(7)
+    'average_drawdown_occurance': average_drawdown_occurance.toFixed(2)
   }
 
   return (
