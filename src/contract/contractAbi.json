@@ -136,11 +136,6 @@
   {
     "inputs": [
       {
-        "internalType": "address",
-        "name": "depositTokenAddress",
-        "type": "address"
-      },
-      {
         "internalType": "uint256",
         "name": "amountToDeposit",
         "type": "uint256"
