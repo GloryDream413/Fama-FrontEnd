@@ -60,7 +60,7 @@ export default function MainGraph() {
   }
 
   const currentDateData = groupedData?.[toDayDate];
-  const allTimePerformance = currentDateData?.[currentDateData.length - 1].profit;
+  const allTimePerformance = currentDateData?.[currentDateData.length - 1].profit.toFixed(7);
 
   // format Data for Graph
   const dateArray = getUserData && Object.keys(groupedData);
@@ -76,11 +76,11 @@ export default function MainGraph() {
   let month2datePerformance = 0;
   if(groupedData?.length >= 30)
   {
-    month2datePerformance = currentDateData?.[currentDateData.length - 1].profit - groupedData?.[dateArray?.[dateArray?.length - 30]]?.[0]?.profit;
+    month2datePerformance = (currentDateData?.[currentDateData.length - 1].profit - groupedData?.[dateArray?.[dateArray?.length - 30]]?.[0]?.profit).toFixed(7);
   }
   else
   {
-    month2datePerformance = currentDateData?.[currentDateData.length - 1].profit - groupedData?.[dateArray?.[0]]?.[0]?.profit;
+    month2datePerformance = (currentDateData?.[currentDateData.length - 1].profit - groupedData?.[dateArray?.[0]]?.[0]?.profit).toFixed(7);
   }
 
 
@@ -107,8 +107,8 @@ export default function MainGraph() {
   }
   average_drawdown_occurance = average_drawdown_occurance / dateArray?.length;
   const drawdowns = {
-    'average_drawdown_rate': average_drawdown_rate,
-    'average_drawdown_occurance': average_drawdown_occurance
+    'average_drawdown_rate': average_drawdown_rate.toFixed(7),
+    'average_drawdown_occurance': average_drawdown_occurance.toFixed(7)
   }
 
   return (
@@ -117,11 +117,11 @@ export default function MainGraph() {
         <div className="grid grid-cols-1 gap-[20px] w-[90%] lg:grid-cols-2">
           <div className="flex gap-5 justify-between items-center lg:justify-normal">
             <p className="text-14 sm:text-20">All time performance:</p>
-            <p className="text-16 sm:text-25 text-number">{allTimePerformance.toFixed(7)}%</p>
+            <p className="text-16 sm:text-25 text-number">{allTimePerformance}%</p>
           </div>
           <div className="flex gap-5 justify-between items-center lg:justify-normal">
             <p className="text-14 sm:text-20">Month to date performance:</p>
-            <p className="text-16 sm:text-25 text-number">{month2datePerformance.toFixed(7)}%</p>
+            <p className="text-16 sm:text-25 text-number">{month2datePerformance}%</p>
           </div>
         </div>
         <Graph graphData={graphData} />
