@@ -10,6 +10,7 @@ import { current } from "@reduxjs/toolkit";
 
 export default function MainGraph() {
   const [allTimePerformance, SetAllTimePerformance] = useState(0);
+  const [realMonth2datePerformance, SetMonth2DatePerformance] = useState(0);
   const [getUserData, setGetUserData] = useState();
   const handleFetch = async () => {
     let config = {
@@ -86,6 +87,9 @@ export default function MainGraph() {
     month2datePerformance = (currentDateData?.[currentDateData.length - 1].profit - groupedData?.[dateArray?.[0]]?.[0]?.profit).toFixed(7);
   }
 
+  useEffect(() => {
+    SetMonth2DatePerformance(month2datePerformance);
+  }, [month2datePerformance])
 
   let average_drawdown_rate = 0;
   let average_drawdown_occurance = 0;
@@ -124,7 +128,7 @@ export default function MainGraph() {
           </div>
           <div className="flex gap-5 justify-between items-center lg:justify-normal">
             <p className="text-14 sm:text-20">Month to date performance:</p>
-            <p className="text-16 sm:text-25 text-number">{month2datePerformance}%</p>
+            <p className="text-16 sm:text-25 text-number">{realMonth2datePerformance}%</p>
           </div>
         </div>
         <Graph graphData={graphData} />
