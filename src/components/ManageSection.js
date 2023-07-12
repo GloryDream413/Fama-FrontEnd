@@ -166,7 +166,7 @@ export default function ManageSection() {
       args: [address, contractAddress],
     });
 
-  const realApproveAmount = approveAmount/1000000n;
+  const realApproveAmount = Number(approveAmount)/1000000;
 
   useEffect(() => {
     // if (error) {
