@@ -99,7 +99,14 @@ export default function MainGraph() {
       }
     }
   
-    average_drawdown_rate = average_drawdown_rate / average_drawdown_occurance;
+    if(average_drawdown_occurance == 0)
+    {
+      average_drawdown_rate = 0;
+    }
+    else
+    {
+      average_drawdown_rate = average_drawdown_rate / average_drawdown_occurance;
+    }
     average_drawdown_occurance = 0;
     for(let idx=1;idx<getUserData?.length;idx++)
     {

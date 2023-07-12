@@ -228,8 +228,8 @@ export default function ManageSection() {
           </div>
           <select
             id="coinSelect"
-            className="bg-[#1C1C28] border border-[#454258] cursor-pointer text-gray-200 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            style={{ background: "linear-gradient(270deg, #C660C7 0%, #4CC5C0 100%)" }}
+            className="border-[1px] sm:text-25 rounded-[30px] py-[5px] text-center w-full"
+            style={{ background: "transparent"}}
             onChange={(e) => setSelectedWithdrawType(e.target.value)}
           >
             <option className="bg-[#1C1C28]" value="USDC">USDC</option>
