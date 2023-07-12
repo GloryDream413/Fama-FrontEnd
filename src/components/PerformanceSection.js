@@ -11,7 +11,9 @@ import { current } from "@reduxjs/toolkit";
 export default function MainGraph() {
   const [allTimePerformance, SetAllTimePerformance] = useState(0);
   const [realMonth2datePerformance, SetMonth2DatePerformance] = useState(0);
-  const [getUserData, setGetUserData] = useState();
+  const [getUserData, SetGetUserData] = useState();
+  const [realGraphData, SetGraphData] = useState();
+
   const handleFetch = async () => {
     let config = {
       method: 'get',
@@ -23,7 +25,7 @@ export default function MainGraph() {
 
     axios.request(config)
       .then((response) => {
-        setGetUserData(response.data)
+        SetGetUserData(response.data)
       })
       .catch((error) => {
       });
@@ -76,6 +78,10 @@ export default function MainGraph() {
       date: dateArray?.[idx]
     }
   })
+
+  useEffect(() => {
+    SetGraphData(graphData);
+  }, [graphData])
 
   let month2datePerformance = 0;
   if(groupedData?.length >= 30)
@@ -131,7 +137,7 @@ export default function MainGraph() {
             <p className="text-16 sm:text-25 text-number">{realMonth2datePerformance}%</p>
           </div>
         </div>
-        <Graph graphData={graphData} />
+        <Graph graphData={realGraphData} />
         <DataContent drawdown={drawdowns} />
         <DataTable tableData={profitArray} />
       </div>
