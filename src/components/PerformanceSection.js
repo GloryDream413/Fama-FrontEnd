@@ -127,11 +127,21 @@ export default function MainGraph() {
         <div className="grid grid-cols-1 gap-[20px] w-[90%] lg:grid-cols-2">
           <div className="flex gap-5 justify-between items-center lg:justify-normal">
             <p className="text-14 sm:text-20">All time performance:</p>
-            <p className="text-16 sm:text-25 text-number">{allTimePerformance}%</p>
+            {allTimePerformance >= 0 && (
+              <p className="text-16 sm:text-25 text-number">{allTimePerformance}%</p>
+            )}
+            {allTimePerformance < 0 && (
+              <p className="text-16 sm:text-25">{allTimePerformance}%</p>
+            )}
           </div>
           <div className="flex gap-5 justify-between items-center lg:justify-normal">
             <p className="text-14 sm:text-20">Month to date performance:</p>
-            <p className="text-16 sm:text-25 text-number">{realMonth2datePerformance}%</p>
+            {allTimePerformance >= 0 && (
+              <p className="text-16 sm:text-25 text-number">{realMonth2datePerformance}%</p>
+            )}
+            {allTimePerformance < 0 && (
+              <p className="text-16 sm:text-25">{realMonth2datePerformance}%</p>
+            )}
           </div>
         </div>
         <Graph graphData={realGraphData} />
