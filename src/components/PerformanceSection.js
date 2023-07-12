@@ -12,7 +12,9 @@ export default function MainGraph() {
   const [allTimePerformance, SetAllTimePerformance] = useState(0);
   const [realMonth2datePerformance, SetMonth2DatePerformance] = useState(0);
   const [getUserData, SetGetUserData] = useState();
+  const [realProfitArray, SetProfitArray] = useState();
   const [realGraphData, SetGraphData] = useState();
+  const [realDrawDowns, SetDrawDown] = useState();
 
   const handleFetch = async () => {
     let config = {
@@ -24,105 +26,102 @@ export default function MainGraph() {
     };
 
     axios.request(config)
-      .then((response) => {
-        SetGetUserData(response.data)
-      })
-      .catch((error) => {
-      });
+    .then((response) => {
+      SetGetUserData(response.data)
+    })
+    .catch((error) => {
+    });
+
+    const updatedUserData = getUserData?.map((item) => {
+      if (item && item.Timestamp) {
+        const date = new Date(item.Timestamp * 1000);
+        const RealDate = date.toLocaleDateString();
+        const RealTime = date.toLocaleTimeString();
+        const timestamp = `${RealDate}@${RealTime}`;
+        return { ...item, Timestamp: timestamp };
+      } else {
+        return item;
+      }
+    });
+  
+    const groupedData = {};
+    updatedUserData?.map((item) => {
+      const date = item.Timestamp.split("@")[0];
+      if (!groupedData[date]) {
+        groupedData[date] = [];
+      }
+      groupedData[date].push(item);
+    });
+    
+    let toDayDate = '';
+    for (const key in groupedData) {
+      toDayDate = key;
+    }
+  
+    const currentDateData = groupedData?.[toDayDate];
+    const tempAllTimePerformance = currentDateData?.[currentDateData.length - 1].profit.toFixed(7);
+    
+    SetAllTimePerformance(tempAllTimePerformance);
+  
+    // format Data for Graph
+    const dateArray = getUserData && Object.keys(groupedData);
+    const profitArray = getUserData && Object.values(groupedData);
+    const graphData = profitArray?.map((item, idx) => {
+      return {
+        percentage: item?.[item.length - 1].profit,
+        table: item?.[0],
+        date: dateArray?.[idx]
+      }
+    })
+  
+    SetProfitArray(profitArray);
+    SetGraphData(graphData);
+  
+    let month2datePerformance = 0;
+    if(groupedData?.length >= 30)
+    {
+      month2datePerformance = (currentDateData?.[currentDateData.length - 1].profit - groupedData?.[dateArray?.[dateArray?.length - 30]]?.[0]?.profit).toFixed(7);
+    }
+    else
+    {
+      month2datePerformance = (currentDateData?.[currentDateData.length - 1].profit - groupedData?.[dateArray?.[0]]?.[0]?.profit).toFixed(7);
+    }
+  
+    SetMonth2DatePerformance(month2datePerformance);
+  
+    let average_drawdown_rate = 0;
+    let average_drawdown_occurance = 0;
+  
+    for(let idx=1;idx<currentDateData?.length;idx++)
+    {
+      if(currentDateData?.[idx-1].profit > currentDateData?.[idx].profit)
+      {
+        average_drawdown_occurance++;
+        average_drawdown_rate += currentDateData?.[idx].profit - currentDateData?.[idx-1].profit;
+      }
+    }
+  
+    average_drawdown_rate = average_drawdown_rate / average_drawdown_occurance;
+    average_drawdown_occurance = 0;
+    for(let idx=1;idx<getUserData?.length;idx++)
+    {
+      if(getUserData?.[idx-1].profit > getUserData?.[idx].profit)
+      {
+        average_drawdown_occurance++;
+      }
+    }
+    average_drawdown_occurance = average_drawdown_occurance / dateArray?.length;
+    const drawdowns = {
+      'average_drawdown_rate': average_drawdown_rate.toFixed(7),
+      'average_drawdown_occurance': average_drawdown_occurance.toFixed(2)
+    }
+  
+    SetDrawDown(drawdowns);
   }
 
   useEffect(() => {
     handleFetch()
-  }, [])
-
-
-  const updatedUserData = getUserData?.map((item) => {
-    if (item && item.Timestamp) {
-      const date = new Date(item.Timestamp * 1000);
-      const RealDate = date.toLocaleDateString();
-      const RealTime = date.toLocaleTimeString();
-      const timestamp = `${RealDate}@${RealTime}`;
-      return { ...item, Timestamp: timestamp };
-    } else {
-      return item;
-    }
-  });
-
-  const groupedData = {};
-  updatedUserData?.map((item) => {
-    const date = item.Timestamp.split("@")[0];
-    if (!groupedData[date]) {
-      groupedData[date] = [];
-    }
-    groupedData[date].push(item);
-  });
-  
-  let toDayDate = '';
-  for (const key in groupedData) {
-    toDayDate = key;
-  }
-
-  const currentDateData = groupedData?.[toDayDate];
-  const tempAllTimePerformance = currentDateData?.[currentDateData.length - 1].profit.toFixed(7);
-  useEffect(() => {
-    SetAllTimePerformance(tempAllTimePerformance);
-  }, [tempAllTimePerformance])
-
-  // format Data for Graph
-  const dateArray = getUserData && Object.keys(groupedData);
-  const profitArray = getUserData && Object.values(groupedData);
-  const graphData = profitArray?.map((item, idx) => {
-    return {
-      percentage: item?.[item.length - 1].profit,
-      table: item?.[0],
-      date: dateArray?.[idx]
-    }
-  })
-
-  useEffect(() => {
-    SetGraphData(graphData);
-  }, [graphData])
-
-  let month2datePerformance = 0;
-  if(groupedData?.length >= 30)
-  {
-    month2datePerformance = (currentDateData?.[currentDateData.length - 1].profit - groupedData?.[dateArray?.[dateArray?.length - 30]]?.[0]?.profit).toFixed(7);
-  }
-  else
-  {
-    month2datePerformance = (currentDateData?.[currentDateData.length - 1].profit - groupedData?.[dateArray?.[0]]?.[0]?.profit).toFixed(7);
-  }
-
-  useEffect(() => {
-    SetMonth2DatePerformance(month2datePerformance);
-  }, [month2datePerformance])
-
-  let average_drawdown_rate = 0;
-  let average_drawdown_occurance = 0;
-
-  for(let idx=1;idx<currentDateData?.length;idx++)
-  {
-    if(currentDateData?.[idx-1].profit > currentDateData?.[idx].profit)
-    {
-      average_drawdown_occurance++;
-      average_drawdown_rate += currentDateData?.[idx].profit - currentDateData?.[idx-1].profit;
-    }
-  }
-
-  average_drawdown_rate = average_drawdown_rate / average_drawdown_occurance;
-  average_drawdown_occurance = 0;
-  for(let idx=1;idx<getUserData?.length;idx++)
-  {
-    if(getUserData?.[idx-1].profit > getUserData?.[idx].profit)
-    {
-      average_drawdown_occurance++;
-    }
-  }
-  average_drawdown_occurance = average_drawdown_occurance / dateArray?.length;
-  const drawdowns = {
-    'average_drawdown_rate': average_drawdown_rate.toFixed(7),
-    'average_drawdown_occurance': average_drawdown_occurance.toFixed(2)
-  }
+  }, [getUserData])
 
   return (
     <div className="">
@@ -138,8 +137,8 @@ export default function MainGraph() {
           </div>
         </div>
         <Graph graphData={realGraphData} />
-        <DataContent drawdown={drawdowns} />
-        <DataTable tableData={profitArray} />
+        <DataContent drawdown={realDrawDowns} />
+        <DataTable tableData={realProfitArray} />
       </div>
     </div>
   );
