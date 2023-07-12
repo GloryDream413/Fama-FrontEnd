@@ -9,7 +9,7 @@ import { endPointOfApi } from './../hooks/query/queryConstants';
 import { current } from "@reduxjs/toolkit";
 
 export default function MainGraph() {
-
+  const [allTimePerformance, SetAllTimePerformance] = useState(0);
   const [getUserData, setGetUserData] = useState();
   const handleFetch = async () => {
     let config = {
@@ -60,7 +60,10 @@ export default function MainGraph() {
   }
 
   const currentDateData = groupedData?.[toDayDate];
-  const allTimePerformance = currentDateData?.[currentDateData.length - 1].profit.toFixed(7);
+  const tempAllTimePerformance = currentDateData?.[currentDateData.length - 1].profit.toFixed(7);
+  useEffect(() => {
+    SetAllTimePerformance(tempAllTimePerformance);
+  }, [tempAllTimePerformance])
 
   // format Data for Graph
   const dateArray = getUserData && Object.keys(groupedData);

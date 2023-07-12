@@ -172,8 +172,6 @@ export default function ManageSection() {
     SetRealApproveAmount(Number(approveAmount)/1000000)
   }, [approveAmount])
 
-  console.log(">>>>>>>>>>>", realApproveAmount);
-
   useEffect(() => {
     // if (error) {
     //   notify(error?.message)
