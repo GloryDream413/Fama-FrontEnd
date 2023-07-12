@@ -41,6 +41,7 @@ export default function ManageSection() {
     functionName: 'balanceOf',
     chainId: 5,
     args: [address],
+    watch: true
   })
 
   const Wallet_Data = [
@@ -69,6 +70,7 @@ export default function ManageSection() {
     functionName: 'balanceOf',
     chainId: 5,
     args: [address],
+    watch: true
   })
 
   const { data: totalSupply, error: errTotalSupply, isLoading: isTotalSupplyLoading } =
@@ -76,6 +78,7 @@ export default function ManageSection() {
     ...lpTokenContract,
     functionName: 'totalSupply',
     chainId: 5,
+    watch: true
   })
 
   const { data: dataTotalVaultUSDC, error: idTotalVaultETH, isLoading: isTotalVaultETHLoading } =
@@ -83,6 +86,7 @@ export default function ManageSection() {
     ...wagmiContractConfig,
     functionName: 'totalVaultUSDC',
     chainId: 5,
+    watch: true
   })
 
   const { data: usdcPrice, error: errUSDCPrice, isLoading: isUSDCPriceLoading } =
@@ -90,6 +94,7 @@ export default function ManageSection() {
     ...wagmiContractConfig,
     functionName: 'getUSDCUSDPrice',
     chainId: 5,
+    watch: true
   })
 
   const { data: dataTotalVaultETH, error: idTotalVaultUSDC, isLoading: isTotalVaultUSDCLoading } =
@@ -97,6 +102,7 @@ export default function ManageSection() {
     ...wagmiContractConfig,
     functionName: 'totalVaultEth',
     chainId: 5,
+    watch: true
   })
 
   const { data: ethPrice, error: errETHPrice, isLoading: isETHPriceLoading } =
@@ -104,6 +110,7 @@ export default function ManageSection() {
     ...wagmiContractConfig,
     functionName: 'getEthUSDPrice',
     chainId: 5,
+    watch: true
   })
 
   const totalUSDCUSD = (Number(dataTotalVaultUSDC) /1000000) * (Number(usdcPrice) /100000000);
