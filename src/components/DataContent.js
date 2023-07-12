@@ -8,6 +8,7 @@ export default function DataContent({drawdown}) {
     ...wagmiContractConfig,
     functionName: 'totalVaultUSDC',
     chainId: 5,
+    watch: true
   })
 
   const { data: usdcPrice, error: errUSDCPrice, isLoading: isUSDCPriceLoading } =
@@ -15,6 +16,7 @@ export default function DataContent({drawdown}) {
     ...wagmiContractConfig,
     functionName: 'getUSDCUSDPrice',
     chainId: 5,
+    watch: true
   })
 
   const { data: dataTotalVaultETH, error: idTotalVaultUSDC, isLoading: isTotalVaultUSDCLoading } =
@@ -22,6 +24,7 @@ export default function DataContent({drawdown}) {
     ...wagmiContractConfig,
     functionName: 'totalVaultEth',
     chainId: 5,
+    watch: true
   })
 
   const { data: ethPrice, error: errETHPrice, isLoading: isETHPriceLoading } =
@@ -29,6 +32,7 @@ export default function DataContent({drawdown}) {
     ...wagmiContractConfig,
     functionName: 'getEthUSDPrice',
     chainId: 5,
+    watch: true
   })
 
   const totalUSDCUSD = (Number(dataTotalVaultUSDC) /1000000) * (Number(usdcPrice) /100000000);

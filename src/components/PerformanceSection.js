@@ -3,10 +3,8 @@ import React, { useState, useEffect } from 'react';
 import DataContent from "./DataContent";
 import DataTable from "./DataTable";
 import Graph from "./Graph";
-import { dataBase } from "@/_mock/dbData";
 import axios from "axios";
 import { endPointOfApi } from './../hooks/query/queryConstants';
-import { current } from "@reduxjs/toolkit";
 
 export default function MainGraph() {
   const [allTimePerformance, SetAllTimePerformance] = useState(0);

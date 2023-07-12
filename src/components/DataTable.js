@@ -40,7 +40,7 @@ export default function DataTable({ tableData }) {
 
                   if (idx < numOfRows)
                     return (
-                      <tr key={idx}>
+                      <tr key={idx*10+idxRow}>
                         <td className="text-16">{date}</td>
                         <td className="text-16 text-center">{time}</td>
                         <td className="text-16 text-center">{action}</td>
@@ -52,7 +52,7 @@ export default function DataTable({ tableData }) {
                     );
                 })
                 )
-              })) : (<tr><td rowspan="10" colspan="7" ><LoadingSpinner />  </td></tr>)}
+              })) : (<tr><td rowSpan="10" colSpan="7" ><LoadingSpinner />  </td></tr>)}
             </tbody>
           </table>
 
