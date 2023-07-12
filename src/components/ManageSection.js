@@ -11,6 +11,7 @@ export default function ManageSection() {
   const { address } = useAccount();
   const [inputValue, setInputValue] = useState(0);
   const [usdBalance, setUsdBalance] = useState(null);
+  const [realApproveAmount, SetRealApproveAmount] = useState(0)
   const [withdrawType, setSelectedWithdrawType] = useState('USDC');
   const { data: userBalance, isLoading: loadUserBalance } = useBalance({
     address,
@@ -164,9 +165,14 @@ export default function ManageSection() {
       functionName: 'allowance',
       chainId: 5,
       args: [address, contractAddress],
+      watch: true
     });
 
-  const realApproveAmount = Number(approveAmount)/1000000;
+  useEffect(() => {
+    SetRealApproveAmount(Number(approveAmount)/1000000)
+  }, [approveAmount])
+
+  console.log(">>>>>>>>>>>", realApproveAmount);
 
   useEffect(() => {
     // if (error) {
@@ -238,8 +244,7 @@ export default function ManageSection() {
               }
             } else {
               notify('Wallet is not connected')
-            }
-          }
+            }}
           }
           className="w-full text-16 sm:text-18 rounded-[30px] py-[10px]" style={{ background: "linear-gradient(270deg, #C660C7 0%, #4CC5C0 100%)" }}>
           {isLoading ? <LoadingSpinner /> : 'Deposit'}
