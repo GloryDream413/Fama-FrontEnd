@@ -108,13 +108,18 @@ export default function MainGraph() {
       average_drawdown_rate = average_drawdown_rate / average_drawdown_occurance;
     }
     average_drawdown_occurance = 0;
-    for(let idx=1;idx<getUserData?.length;idx++)
+    for(let idx=0;idx<dateArray?.length;idx++)
     {
-      if(getUserData?.[idx-1].profit > getUserData?.[idx].profit)
+      for(let inidx=1;inidx<groupedData?.[dateArray?.[idx]]?.length;inidx++)
       {
-        average_drawdown_occurance++;
+        if(groupedData?.[dateArray?.[idx]]?.[inidx-1].profit > groupedData?.[dateArray?.[idx]]?.[inidx].profit)
+        {
+          average_drawdown_occurance++;
+          break;
+        }
       }
     }
+
     average_drawdown_occurance = average_drawdown_occurance / dateArray?.length;
     const drawdowns = {
       'average_drawdown_rate': average_drawdown_rate.toFixed(7),
