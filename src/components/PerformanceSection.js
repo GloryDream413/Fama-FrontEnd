@@ -110,13 +110,9 @@ export default function MainGraph() {
     average_drawdown_occurance = 0;
     for(let idx=0;idx<dateArray?.length;idx++)
     {
-      for(let inidx=1;inidx<groupedData?.[dateArray?.[idx]]?.length;inidx++)
+      if(groupedData?.[dateArray?.[idx]]?.[0].profit > groupedData?.[dateArray?.[idx]]?.[groupedData?.[dateArray?.[idx]]?.length - 1].profit)
       {
-        if(groupedData?.[dateArray?.[idx]]?.[inidx-1].profit > groupedData?.[dateArray?.[idx]]?.[inidx].profit)
-        {
-          average_drawdown_occurance++;
-          break;
-        }
+        average_drawdown_occurance++;
       }
     }
 
